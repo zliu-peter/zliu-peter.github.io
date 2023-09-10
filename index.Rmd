@@ -1,0 +1,39 @@
+---
+title: "Zixing (Peter) Liu"
+image: "Peter.jpg"
+links:
+  - label: '`r fontawesome::fa("linkedin", fill="skyblue")` LinkedIn'
+    url: "https://linkedin.com/in/zixing-peter-liu"
+  - label: '`r fontawesome::fa("github", fill="skyblue")` GitHub'
+    url: "https://github.com/zliu-peter"
+  - label: '`r fontawesome::fa("envelope", fill="skyblue")` Email'
+    url: "mailto:zliu94@jh.edu"
+output:
+  postcards::trestles
+---
+
+```{r setup, warning=FALSE, message=FALSE, include=FALSE}
+library(fontawesome)
+```
+
+#### About Me
+
+I am a first-year ScM student in biostatistics at Johns Hopkins Bloomberg School of Public Health (BSPH). I graduated from Johns Hopkins University with a Bachelor of Science in Molecular & Cellular Biology and a minor in Applied Math and Statistics. I have some previous research experience using R, but I am new to github and hope to learn more. Broadly speaking, I am interested in multi-omics approaches to tackle chronic and complex illnesses, such as identifying biomarkers or characterizing individual variability to better prevent and diagnose chronic diseases. At BSPH, I hope to gain more experience in clinical trial and precision medicine.
+
+------------------------------------------------------------------------
+
+#### Education
+
+Johns Hopkins University \| B.S. in Molecular & Cellular Biology \| May 2023
+
+------------------------------------------------------------------------
+
+#### Experience
+
+Johns Hopkins University School of Medicine \| *Undergraduate Research Assistant* \| Feb 2020 - Aug 2023
+
+------------------------------------------------------------------------
+
+#### Interests & Hobbies
+
+Black & white photography, movies/documentaries, watercolor, badminton, traveling, running, chess

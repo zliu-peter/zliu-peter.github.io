@@ -1,5 +1,5 @@
 ---
-title: "Zixing (Peter) Liu"
+title: "Peter Liu"
 image: "Peter.jpg"
 links:
   - label: '`r fontawesome::fa("linkedin", fill="skyblue")` LinkedIn'

@@ -1,0 +1,1735 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.353">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Zixing (Peter) Liu">
+<meta name="dcterms.date" content="2023-11-10">
+<meta name="description" content="An example analysis with Board Game Data">
+
+<title>Personal Website - Example Analysis</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+<script src="site_libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="site_libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Personal Website</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./about.html" rel="" target="">
+ <span class="menu-text">About Me</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link active" href="./analysis.html" rel="" target="" aria-current="page">
+ <span class="menu-text">Example Analysis</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
+  <li><a href="#project-aims" id="toc-project-aims" class="nav-link" data-scroll-target="#project-aims">Project Aims</a></li>
+  <li><a href="#intended-audience" id="toc-intended-audience" class="nav-link" data-scroll-target="#intended-audience">Intended Audience</a></li>
+  <li><a href="#data-source" id="toc-data-source" class="nav-link" data-scroll-target="#data-source">Data Source</a></li>
+  <li><a href="#analysis" id="toc-analysis" class="nav-link" data-scroll-target="#analysis">Analysis</a>
+  <ul class="collapse">
+  <li><a href="#board-game-designer-analysis" id="toc-board-game-designer-analysis" class="nav-link" data-scroll-target="#board-game-designer-analysis">Board Game Designer Analysis</a></li>
+  <li><a href="#game-category-mechanic-analysis" id="toc-game-category-mechanic-analysis" class="nav-link" data-scroll-target="#game-category-mechanic-analysis">Game Category &amp; Mechanic Analysis</a></li>
+  </ul></li>
+  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#functions-used" id="toc-functions-used" class="nav-link" data-scroll-target="#functions-used">Functions Used</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content page-columns page-full" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Example Analysis</h1>
+  <div class="quarto-categories">
+    <div class="quarto-category">JHSPH</div>
+  </div>
+  </div>
+
+<div>
+  <div class="description">
+    An example analysis with Board Game Data
+  </div>
+</div>
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Zixing (Peter) Liu </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">November 10, 2023</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+</header>
+
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="images/tidytuesday.jpg" class="img-fluid"></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/heading_pic.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">The dataset was posted on <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-01-25">tidytuesday</a>, from <a href="https://www.kaggle.com/jvanelteren/boardgamegeek-reviews/version/3?select=2022-01-08.csv">Kaggle</a> and <a href="https://www.boardgamegeek.com/">Board Games Geek</a>, thanks to <a href="https://github.com/rfordatascience/tidytuesday/issues/382#issuecomment-1020305849">David and Georgios</a>.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> (<span class="sc">!</span><span class="fu">file.exists</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"ratings.RDS"</span>, <span class="st">"details.RDS"</span>))) {</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>    ratings <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-01-25/ratings.csv"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>    details <span class="ot">&lt;-</span> readr<span class="sc">::</span><span class="fu">read_csv</span>(<span class="st">"https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2022/2022-01-25/details.csv"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="co"># save the files to RDS objects</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(ratings, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"ratings.RDS"</span>))</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">saveRDS</span>(details, <span class="at">file =</span> <span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"details.RDS"</span>))</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>ratings <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"ratings.RDS"</span>))</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>details <span class="ot">=</span> <span class="fu">readRDS</span>(<span class="fu">here</span>(<span class="st">"data"</span>, <span class="st">"details.RDS"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<section id="background" class="level1">
+<h1>Background</h1>
+<p>The board game market size has been growing and projected to increase continuously as demonstrated on the figure below<span class="citation" data-cites="Technavio2023"><sup><a href="#ref-Technavio2023" role="doc-biblioref">1</a></sup></span>, thereby offering an opportunity for making interesting queries.</p>
+<div id="fig:market" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="images/market.jpg" class="img-fluid figure-img" width="500"></p>
+<figcaption class="figure-caption">Fig 1: Board game market growth projection</figcaption>
+</figure>
+</div>
+</section>
+<section id="project-aims" class="level1">
+<h1>Project Aims</h1>
+<p>In this example analysis, I am investigating patterns within the board game dataset, which contains various details on board game user ratings, designers, published year, number of people owning the game, etc. I focused on games developed since the 1990s. Specifically, I seek to answer the following questions:</p>
+<ul>
+<li>Who are some of the best board game designers since the 1990s?
+<ul>
+<li>Who are very prolific?</li>
+<li>When are they active?</li>
+<li>Do they have good ratings? Are ratings consistent over time?</li>
+<li>What game categories are these prolific designers associated with?</li>
+</ul></li>
+<li>What games are the most owned since the 1990s?
+<ul>
+<li>What are the top board game categories since the 1990s?
+<ul>
+<li>Is there any trends?</li>
+</ul></li>
+<li>What are the top board game mechanics over the years?
+<ul>
+<li>Is there any trends?</li>
+</ul></li>
+</ul></li>
+</ul>
+</section>
+<section id="intended-audience" class="level1">
+<h1>Intended Audience</h1>
+<p>This analysis is intended for the general public, as well as those who are interested in board games.</p>
+</section>
+<section id="data-source" class="level1">
+<h1>Data Source</h1>
+<p>The data source is tidytuesday, as described above. <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-01-25">Click here for more details.</a><span class="citation" data-cites="datsource"><sup><a href="#ref-datsource" role="doc-biblioref">2</a></sup></span></p>
+<p>There are two datasets, one containing general info about game name, id, and rating while the other including more comprehensive details on board game designer, artist, description, category, mechanic, published year, rating, etc. <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-01-25#data-dictionary">Click here for the data dictionary.</a></p>
+</section>
+<section id="analysis" class="level1 page-columns page-full">
+<h1>Analysis</h1>
+<section id="board-game-designer-analysis" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="board-game-designer-analysis">Board Game Designer Analysis</h2>
+<p>In this section, I conducted analysis on and highlighted some of the most brilliant board game designers since the 1990s.</p>
+<div class="callout callout-style-default callout-important callout-titled" title="Analysis Background">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Analysis Background
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The analysis excluded games published before 1990 and those with fewer than 50 user ratings. Games with unknown or uncredited designers were also removed from the analysis.</p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data cleaning &amp; Wrangling</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>games <span class="ot">&lt;-</span> details <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>num) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(ratings <span class="sc">%&gt;%</span> dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="fu">c</span>(<span class="st">"id"</span>,<span class="st">"average"</span>,<span class="st">"users_rated"</span>)), <span class="at">by=</span><span class="st">"id"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(users_rated<span class="sc">&gt;=</span><span class="dv">50</span> <span class="sc">&amp;</span> yearpublished<span class="sc">&gt;=</span><span class="dv">1990</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">decades =</span> <span class="fu">case_when</span>(</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">between</span>(yearpublished, <span class="dv">1990</span>, <span class="dv">1999</span>) <span class="sc">~</span> <span class="st">"1990s"</span>,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">between</span>(yearpublished, <span class="dv">2000</span>, <span class="dv">2009</span>) <span class="sc">~</span> <span class="st">"2000s"</span>,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">between</span>(yearpublished, <span class="dv">2010</span>, <span class="dv">2019</span>) <span class="sc">~</span> <span class="st">"2010s"</span>,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    yearpublished <span class="sc">&gt;</span> <span class="dv">2019</span> <span class="sc">~</span> <span class="st">"2020s"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename_with</span>(<span class="sc">~</span>stringr<span class="sc">::</span><span class="fu">str_replace_all</span>(., <span class="st">"boardgame"</span>, <span class="st">""</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span><span class="fu">c</span>(<span class="st">"family"</span>,<span class="st">"expansion"</span>,<span class="st">"implementation"</span>,<span class="st">"artist"</span>,<span class="st">"publisher"</span>))</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>rm_brackets <span class="ot">&lt;-</span> <span class="cf">function</span>(x){</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  {<span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\\</span><span class="st">[|</span><span class="sc">\\</span><span class="st">]"</span>, <span class="st">""</span>, x)} <span class="sc">%&gt;%</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(., <span class="st">", '"</span>, <span class="st">";'"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(., <span class="st">", </span><span class="sc">\"</span><span class="st">"</span>, <span class="st">";'"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_replace_all</span>(., <span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="st">"'"</span>)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>games <span class="sc">%&lt;&gt;%</span> dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="fu">across</span>(category<span class="sc">:</span>designer, rm_brackets))</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>games_designer <span class="ot">&lt;-</span> games <span class="sc">%&gt;%</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(designer, <span class="at">sep =</span> <span class="st">";</span><span class="sc">\\</span><span class="st">s*"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(decades, designer) <span class="sc">%&gt;%</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">count=</span><span class="fu">n</span>(), <span class="at">score=</span><span class="fu">mean</span>(average)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(designer)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(designer<span class="sc">!=</span><span class="st">"'(Uncredited)'"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(count), <span class="fu">desc</span>(score)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">designer=</span><span class="fu">gsub</span>(<span class="st">"'"</span>,<span class="st">""</span>,designer)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(designer) <span class="sc">%&gt;%</span></span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">total_count=</span><span class="fu">sum</span>(count)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>Who are prolific board game designers?</strong></p>
+<p>To identify those who are one of the best designers, let’s first explore the number of games they developed in each decade since the 1990.</p>
+<div class="cell">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>x <span class="ot">=</span> <span class="fu">ggplot</span>(games_designer <span class="sc">%&gt;%</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">decades=</span><span class="fu">factor</span>(decades, <span class="at">levels=</span><span class="fu">rev</span>(<span class="fu">unique</span>(decades)))), <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">fct_reorder</span>(designer, total_count), <span class="at">y=</span>count, <span class="at">fill=</span>decades)) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">position=</span><span class="st">"stack"</span>) <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Prolific Game Designers since 1990s"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">x =</span> <span class="st">"Designer"</span>,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"# of Board Games Developed"</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">subtitle =</span> <span class="st">"Reiner Knizia is the most prolific game designer since the 1990s, totaling 300+ games."</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">caption =</span> <span class="st">"Games with &lt;50 reviews excluded."</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>         ) <span class="sc">+</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">14</span>),</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">19</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>          <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>          <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">9</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">14</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>          <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>     <span class="fu">guides</span>(<span class="at">fill=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Decades"</span>)) <span class="sc">+</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_fill_brewer</span>(<span class="at">palette=</span><span class="st">"Set2"</span>)</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="analysis_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption class="figure-caption">Fig 2. Prolific game designers by the number of games designed since the 1990.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Clearly, we see that Reiner Knizia absolutely dominated in quantity of games developed, with his peak active years in the 2000s and 2010s. Some other creative game designers who designed many games are (1) Wolfgang Kramer, who were mostly active in the 1990s and 2000s; (2) Martin Wallace, Matt Hyra, Eric M. Lang who became more prolific in the 2010s; and (3) Prospero Hall who emerged in the 2020s.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The lower number of games developed in the 2020s are partially due to a lack of data collected in recent years.</p>
+</div>
+</div>
+<p>Next, I take a closer look at both the amount of games and rating stratified by each decade. The rating are depicted by the color gradient while the bars represent the number of games developed.</p>
+<p>We see some aforementioned familiar names appear, meaning that those who were one of the most prolific designers were typically quite active for over 30 years. For instance, Reiner Knizia topped the charts in three decades since the 1990s. Based on the color gradient, his rating seemed to suffer a bit in the 2000s but recovered in 2010s. Overall, these designers are usually both prolific and critically acclaimed by users.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The game rating was averaged for all the games developed by that designer in the corresponding decades.</p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># While Reiner dominated when looking at each decade separately (average rating for each dacade instead of for all the decades combined). The sheer amount of games he produced might have lower his mean rating, but it is still a quite impressive rating.</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(games_designer, <span class="fu">aes</span>(<span class="at">x=</span>tidytext<span class="sc">::</span><span class="fu">reorder_within</span>(designer, count, decades), <span class="at">y=</span>count, <span class="at">fill=</span>score)) <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  tidytext<span class="sc">::</span><span class="fu">scale_x_reordered</span>()<span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_gradient</span>(<span class="at">low=</span><span class="st">"#96E9FF"</span>, <span class="at">high=</span><span class="st">"#0354AF"</span>)<span class="sc">+</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Top 5 Most Prolific Game Designer in Each Decade"</span>,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Board Game Designer"</span>,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"# of Games Designed in This Decade"</span>,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">"1. Reiner Knizia has dominated the board game markets for almost 30 years, </span><span class="sc">\n</span><span class="st">both with the amount and with acceptable rating of games. </span><span class="sc">\n</span><span class="st">2. Prospero Hall emerges in the 2020s, taking the lead with 28 new games produced."</span>,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption=</span><span class="st">"Games with &lt;50 reviews excluded.</span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="st">                </span><span class="sc">\n</span><span class="st">Legend represents mean game rating for each decade."</span>) <span class="sc">+</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>decades, <span class="at">scales =</span> <span class="st">"free"</span>, <span class="at">ncol =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">14</span>),</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">19</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">9</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">14</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>   <span class="fu">guides</span>(<span class="at">fill=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Mean Rating"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="analysis_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption class="figure-caption">Fig 3. Top 5 prolific game designers in each decade.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>How are their games’ ratings?</strong></p>
+<p>We have a glimpse at the ratings from Fig 3 through the filled color. To directly observe the user ratings of games, we plot the rating distribution of top 10 most prolific game designers spanning over 30 years. Here, “top 10 most prolific” is defined as having the top 10 highest number of games developed during 1990 to 2023.</p>
+<div class="callout callout-style-default callout-caution callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Caution
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>It is not necessarily the best to identify brilliant game designers solely through their user ratings, since they are heavily dependent on the number of ratings/games available.</p>
+</div>
+</div>
+<div class="cell page-columns page-full">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>top10_rated_designers <span class="ot">&lt;-</span> games <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(designer, <span class="at">sep =</span> <span class="st">";</span><span class="sc">\\</span><span class="st">s*"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(designer) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="st">`</span><span class="at">Avg Rating</span><span class="st">`</span><span class="ot">=</span><span class="fu">mean</span>(average), <span class="st">`</span><span class="at"># Game</span><span class="st">`</span><span class="ot">=</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">designer=</span><span class="fu">gsub</span>(<span class="st">"'"</span>,<span class="st">""</span>,designer)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(designer)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(designer<span class="sc">!=</span><span class="st">"'(Uncredited)'"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(<span class="st">`</span><span class="at">Avg Rating</span><span class="st">`</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">rename</span>(<span class="at">Designer=</span>designer)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(top10_rated_designers, <span class="at">format=</span><span class="st">"html"</span>,</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption=</span><span class="st">"Highest Rated Designers"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">column_spec</span>(<span class="dv">3</span>, <span class="at">bold=</span><span class="cn">TRUE</span>, <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic_2</span>(<span class="at">html_font=</span><span class="st">"Garamond"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<table class="lightable-classic-2 table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Highest Rated Designers</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Designer</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Avg Rating</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;"># Game</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Gener Escalante Hernandez</td>
+<td style="text-align: right;">9.43</td>
+<td style="text-align: right; font-weight: bold; color: red !important;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Florian Dumont</td>
+<td style="text-align: right;">9.36</td>
+<td style="text-align: right; font-weight: bold; color: red !important;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gabriele Porro</td>
+<td style="text-align: right;">9.09</td>
+<td style="text-align: right; font-weight: bold; color: red !important;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carly Shields</td>
+<td style="text-align: right;">9.04</td>
+<td style="text-align: right; font-weight: bold; color: red !important;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Michael DiMauro</td>
+<td style="text-align: right;">9.04</td>
+<td style="text-align: right; font-weight: bold; color: red !important;">1</td>
+</tr>
+</tbody>
+</table>
+
+
+</div></div></div>
+<p>As we see, the top 5 highest rated designers only developed less than 5 games. Thus, here we focus our attention on the ratings of prolific designers who have adequate number of ratings for more robust comparison.</p>
+<div class="cell">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>top_designer <span class="ot">&lt;-</span> games_designer <span class="sc">%&gt;%</span> </span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(total_count)) <span class="sc">%&gt;%</span> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(designer) <span class="sc">%&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">distinct</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">10</span>)</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>games_rating <span class="ot">&lt;-</span> games <span class="sc">%&gt;%</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate_rows</span>(designer, <span class="at">sep=</span><span class="st">";</span><span class="sc">\\</span><span class="st">s*"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">category=</span><span class="fu">gsub</span>(<span class="st">"</span><span class="sc">\"</span><span class="st">"</span>, <span class="st">""</span>,category)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  tidyr<span class="sc">::</span><span class="fu">separate_rows</span>(category, <span class="at">sep=</span><span class="st">";</span><span class="sc">\\</span><span class="st">s*"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(designer)) <span class="sc">%&gt;%</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(designer<span class="sc">!=</span><span class="st">"'(Uncredited)'"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="fu">gsub</span>(<span class="st">"'"</span>,<span class="st">""</span>,designer) <span class="sc">%in%</span> top_designer<span class="sc">$</span>designer) <span class="sc">%&gt;%</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(id, primary, yearpublished, category, designer, average, decades) <span class="sc">%&gt;%</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="fu">across</span>(category<span class="sc">:</span>designer, <span class="sc">~</span> <span class="fu">gsub</span>(<span class="st">"'"</span>, <span class="st">""</span>, .))) <span class="sc">%&gt;%</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">designer=</span><span class="fu">factor</span>(designer, <span class="at">levels=</span>top_designer<span class="sc">$</span>designer))</span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>x <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(games_rating, <span class="fu">aes</span>(<span class="at">x=</span>designer, <span class="at">y=</span>average)) <span class="sc">+</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_boxplot</span>(<span class="at">geom=</span><span class="st">'errorbar'</span>, <span class="at">linetype=</span><span class="dv">1</span>, <span class="at">width=</span><span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">outlier.shape=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb6-23"><a href="#cb6-23" aria-hidden="true" tabindex="-1"></a>  <span class="co"># dot for mean</span></span>
+<span id="cb6-24"><a href="#cb6-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">stat_summary</span>(<span class="at">fun=</span>mean, <span class="at">geom=</span><span class="st">"point"</span>, <span class="at">size=</span><span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb6-25"><a href="#cb6-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Distribution of Ratings of Games by Designers since the 1990s"</span>,</span>
+<span id="cb6-26"><a href="#cb6-26" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Top 10 Most Prolific Board Game Designers"</span>,</span>
+<span id="cb6-27"><a href="#cb6-27" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Users' Rating of Games since the 1990s"</span>,</span>
+<span id="cb6-28"><a href="#cb6-28" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">"1. Dean Essig, Eric M. Lang, &amp; Martin Wallace have the top 3 best mean/median game ratings.  </span><span class="sc">\n</span><span class="st">2. Reiner Knizia's rating was likely negatively impacted by some of his lower-rated games </span><span class="sc">\n</span><span class="st">   since he is so prolific."</span>,</span>
+<span id="cb6-29"><a href="#cb6-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption=</span><span class="st">"Games with &lt;50 reviews excluded.</span></span>
+<span id="cb6-30"><a href="#cb6-30" aria-hidden="true" tabindex="-1"></a><span class="st">                </span><span class="sc">\n</span><span class="st">Black solid point represents the mean game rating from 1990s-2020s."</span>) <span class="sc">+</span></span>
+<span id="cb6-31"><a href="#cb6-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb6-32"><a href="#cb6-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb6-33"><a href="#cb6-33" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">14</span>),</span>
+<span id="cb6-34"><a href="#cb6-34" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">17</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb6-35"><a href="#cb6-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">14</span>),</span>
+<span id="cb6-36"><a href="#cb6-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb6-37"><a href="#cb6-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb6-38"><a href="#cb6-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb6-39"><a href="#cb6-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">angle=</span><span class="dv">45</span>, <span class="at">vjust=</span><span class="fl">0.5</span>))</span>
+<span id="cb6-40"><a href="#cb6-40" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-41"><a href="#cb6-41" aria-hidden="true" tabindex="-1"></a>x</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="analysis_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="864"></p>
+<figcaption class="figure-caption">Fig 4. Rating distribution of games designed by prolific game designers (top 10 by quantity of games).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p><strong>Are their ratings consistent over time?</strong></p>
+<p>The previous figure, Fig 4, shows the aggregate rating distribution from 1990s to 2020s. What if we look at the ratings over time. Are these designers consistent in each year for the games they produced?</p>
+<div class="cell">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>games_rating_2 <span class="ot">&lt;-</span> games_rating <span class="sc">%&gt;%</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(designer, yearpublished) <span class="sc">%&gt;%</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="co"># This mean is the mean of user's rating for all games in a specific year!</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mean_by_year=</span><span class="fu">mean</span>(average))</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(games_rating_2, <span class="fu">aes</span>(<span class="at">x=</span>yearpublished, <span class="at">y=</span>mean_by_year)) <span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">se=</span><span class="cn">TRUE</span>) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="fu">vars</span>(designer), <span class="at">ncol=</span><span class="dv">5</span>, <span class="at">scales=</span><span class="st">"free_y"</span>) <span class="sc">+</span> </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Game Rating over Time since the 1990s"</span>,</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Years"</span>,</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Average Rating for All Games in Each Year"</span>,</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Game rating was averaged for each year."</span>,</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"1. For most designers shown, they experienced a drop in rating between 2000 and 2010. </span><span class="sc">\n</span><span class="st">2. There is a positive trend for almost all designers in recent years."</span>) <span class="sc">+</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_classic</span>() <span class="sc">+</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">24</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">16</span>),</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">18</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">18</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>),</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">14</span>, <span class="at">face=</span><span class="st">"bold"</span>, <span class="at">color=</span><span class="st">"red"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="analysis_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid figure-img" width="1536"></p>
+<figcaption class="figure-caption">Fig 5. Rating over time for top designers.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Evaluated by the game ratings, these games that the prolific designers produced seem to be favored by the users, as they are fairly consistent. Especially in recent years, we see an upward trend in game ratings for most of the designers shown here.</p>
+<p><strong>Top game categories by prolific game designers</strong></p>
+<p>Let’s take a look at the designers who have fast-growing rating trends and shift gears to investigate what game categories with which they mostly associated. Specifically, we look at Reiner Knizia, Dean Essig, Eric M. Lang, &amp; Martin Wallace.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Warning
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Game category quantity does NOT equal the number of unique games. There are games that are associated with multiple game categories.</p>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>designer_lst <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Dean Essig"</span>, <span class="st">"Eric M. Lang"</span>, <span class="st">"Martin Wallace"</span>, <span class="st">"Reiner Knizia"</span>)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>games_rating_pie <span class="ot">&lt;-</span> games_rating_2 <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(designer <span class="sc">%in%</span> designer_lst) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(designer, category) <span class="sc">%&gt;%</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">quantity=</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(designer, <span class="fu">desc</span>(quantity)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>()</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>top_categories <span class="ot">&lt;-</span> games_rating_pie <span class="sc">%&gt;%</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(designer) <span class="sc">%&gt;%</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">norm_quant=</span>quantity<span class="sc">/</span><span class="fu">sum</span>(quantity)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>()</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a><span class="co"># output this other category on the margin!</span></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>others_categories <span class="ot">&lt;-</span> games_rating_pie <span class="sc">%&gt;%</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">anti_join</span>(top_categories, <span class="at">by=</span><span class="fu">c</span>(<span class="st">"designer"</span>, <span class="st">"category"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(designer) <span class="sc">%&gt;%</span></span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">quantity =</span> <span class="fu">sum</span>(quantity), <span class="at">category=</span><span class="st">"Others"</span>)</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>my_palette <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"#0073FF"</span>, <span class="st">"#DBD4D4"</span>, <span class="st">"#7AC4F7"</span>, <span class="st">"#117799"</span>, <span class="st">"#A52A2A"</span>, <span class="st">"#D8BFD8"</span>, <span class="st">"#FF6347"</span>, <span class="st">"#FFE4C4"</span>, <span class="st">"#FFA07B"</span>, <span class="st">"#A4918C"</span>)</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a faceted pie chart</span></span>
+<span id="cb8-26"><a href="#cb8-26" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(top_categories , <span class="fu">aes</span>(<span class="at">x=</span><span class="st">""</span>, <span class="at">y=</span>norm_quant, <span class="at">fill=</span>category)) <span class="sc">+</span></span>
+<span id="cb8-27"><a href="#cb8-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">width=</span><span class="dv">1</span>, <span class="at">color=</span><span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb8-28"><a href="#cb8-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> my_palette) <span class="sc">+</span></span>
+<span id="cb8-29"><a href="#cb8-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">"y"</span>) <span class="sc">+</span></span>
+<span id="cb8-30"><a href="#cb8-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span> designer) <span class="sc">+</span></span>
+<span id="cb8-31"><a href="#cb8-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
+<span id="cb8-32"><a href="#cb8-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"right"</span>) <span class="sc">+</span></span>
+<span id="cb8-33"><a href="#cb8-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Top 3 Most Frequent Categories for Designers"</span>,</span>
+<span id="cb8-34"><a href="#cb8-34" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Category"</span>,</span>
+<span id="cb8-35"><a href="#cb8-35" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"A closer look at top game categories for Reiner Knizia, Dean Essig,</span><span class="sc">\n</span><span class="st">Eric M. Lang, &amp; Martin Wallace."</span>,</span>
+<span id="cb8-36"><a href="#cb8-36" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"The rest of the categories are characterized as 'Others' &amp; not shown here."</span>) <span class="sc">+</span></span>
+<span id="cb8-37"><a href="#cb8-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">20</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb8-38"><a href="#cb8-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">14</span>),</span>
+<span id="cb8-39"><a href="#cb8-39" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb8-40"><a href="#cb8-40" aria-hidden="true" tabindex="-1"></a>        <span class="at">strip.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>, <span class="at">face=</span><span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="analysis_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid figure-img" width="864"></p>
+<figcaption class="figure-caption">Fig 6. Top three game categories associated with top game designers.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell page-columns page-full">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(others_categories) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Designer"</span>, <span class="st">"Quantity"</span>, <span class="st">"Game Category"</span>)</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(others_categories, <span class="at">format=</span><span class="st">"html"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption=</span><span class="st">"Number of 'Others' Category"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic_2</span>(<span class="at">html_font=</span><span class="st">"Garamond"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+
+<div class="no-row-height column-margin column-container"><div class="cell-output-display">
+<table class="lightable-classic-2 table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Number of 'Others' Category</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Designer</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Quantity</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Game Category</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Reiner Knizia</td>
+<td style="text-align: right;">447</td>
+<td style="text-align: left;">Others</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Martin Wallace</td>
+<td style="text-align: right;">216</td>
+<td style="text-align: left;">Others</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eric M. Lang</td>
+<td style="text-align: right;">155</td>
+<td style="text-align: left;">Others</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dean Essig</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: left;">Others</td>
+</tr>
+</tbody>
+</table>
+
+
+</div></div></div>
+<p>Note that I only showed the top three categories and the rest are characterized as ‘Others’ (Details in the margin).</p>
+<p>The details for top three categories are displayed in the table below.</p>
+<div class="cell">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(top_categories) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Designer"</span>, <span class="st">"Game Category"</span>, <span class="st">"Quantity"</span>, <span class="st">"norm_quant"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(top_categories <span class="sc">%&gt;%</span> <span class="fu">select</span>(<span class="sc">-</span>norm_quant), <span class="at">format=</span><span class="st">"html"</span>,</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption=</span><span class="st">"Top 3 Game Categories by Quantity"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="fu">c</span>(<span class="fu">seq</span>(<span class="dv">1</span>,<span class="dv">12</span>,<span class="at">by=</span><span class="dv">3</span>)), <span class="at">bold=</span><span class="cn">TRUE</span>, <span class="at">background=</span><span class="st">"lightyellow"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_classic_2</span>(<span class="at">html_font=</span><span class="st">"Garamond"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<table class="lightable-classic-2 table table-sm table-striped small" data-quarto-postprocess="true">
+<caption>Top 3 Game Categories by Quantity</caption>
+<thead>
+<tr class="header">
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Designer</th>
+<th data-quarto-table-cell-role="th" style="text-align: left; font-weight: bold;">Game Category</th>
+<th data-quarto-table-cell-role="th" style="text-align: right; font-weight: bold;">Quantity</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: lightyellow !important;">Reiner Knizia</td>
+<td style="text-align: left; font-weight: bold; background-color: lightyellow !important;">Card Game</td>
+<td style="text-align: right; font-weight: bold; background-color: lightyellow !important;">120</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Reiner Knizia</td>
+<td style="text-align: left;">Childrens Game</td>
+<td style="text-align: right;">42</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Reiner Knizia</td>
+<td style="text-align: left;">Abstract Strategy</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: lightyellow !important;">Martin Wallace</td>
+<td style="text-align: left; font-weight: bold; background-color: lightyellow !important;">Economic</td>
+<td style="text-align: right; font-weight: bold; background-color: lightyellow !important;">17</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Martin Wallace</td>
+<td style="text-align: left;">Fighting</td>
+<td style="text-align: right;">16</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Martin Wallace</td>
+<td style="text-align: left;">Card Game</td>
+<td style="text-align: right;">15</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left; font-weight: bold; background-color: lightyellow !important;">Eric M. Lang</td>
+<td style="text-align: left; font-weight: bold; background-color: lightyellow !important;">Fighting</td>
+<td style="text-align: right; font-weight: bold; background-color: lightyellow !important;">32</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Eric M. Lang</td>
+<td style="text-align: left;">Fantasy</td>
+<td style="text-align: right;">29</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eric M. Lang</td>
+<td style="text-align: left;">Collectible Components</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left; font-weight: bold; background-color: lightyellow !important;">Dean Essig</td>
+<td style="text-align: left; font-weight: bold; background-color: lightyellow !important;">Wargame</td>
+<td style="text-align: right; font-weight: bold; background-color: lightyellow !important;">78</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dean Essig</td>
+<td style="text-align: left;">World War II</td>
+<td style="text-align: right;">48</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dean Essig</td>
+<td style="text-align: left;">American Civil War</td>
+<td style="text-align: right;">18</td>
+</tr>
+</tbody>
+</table>
+
+
+</div>
+</div>
+</section>
+<section id="game-category-mechanic-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="game-category-mechanic-analysis">Game Category &amp; Mechanic Analysis</h2>
+<p>In this section, I switched my focus to look at popular game categories and mechanics, using the number of ‘owned’ games as the metric to evaluate the popularity of a game.</p>
+<div class="cell">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Most owned games data cleaning</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>owned_games <span class="ot">&lt;-</span> games <span class="sc">%&gt;%</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(id, primary) <span class="sc">%&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">owned=</span><span class="fu">sum</span>(owned)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(<span class="fu">desc</span>(owned)) <span class="sc">%&gt;%</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">left_join</span>(<span class="at">y=</span>games <span class="sc">%&gt;%</span> <span class="fu">select</span>(id, yearpublished, category, average, designer), <span class="at">by=</span><span class="st">"id"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p><strong>What are some of the most owned games?</strong></p>
+<p>Here, we show the details of top 15 most owned games since the 1990. Interestingly, Catan<span class="citation" data-cites="catan"><sup><a href="#ref-catan" role="doc-biblioref">3</a></sup></span>, which is a strategy-based game, is the only game developed in the 1990s that made the top 15.</p>
+<div class="cell">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tb_owned <span class="ot">&lt;-</span> owned_games <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">15</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">select</span>(<span class="sc">-</span>id) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="fu">across</span>(category<span class="sc">:</span>designer, <span class="sc">~</span> <span class="fu">gsub</span>(<span class="st">"'"</span>, <span class="st">""</span>, .))) <span class="sc">%&gt;%</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="fu">across</span>(category<span class="sc">:</span>designer, <span class="sc">~</span> <span class="fu">gsub</span>(<span class="st">";"</span>, <span class="st">"; "</span>, .)))</span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tb_owned) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Game"</span>, <span class="st">"Owned"</span>, <span class="st">"Year"</span>, <span class="st">"Category"</span>, <span class="st">"Rating"</span>, <span class="st">"Designer"</span>)</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(tb_owned, <span class="at">format=</span><span class="st">"html"</span>,</span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>      <span class="at">caption=</span><span class="st">"Top 15 Games (by # of People Owned) since the 1990s"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="fu">c</span>(<span class="dv">2</span>), <span class="at">bold=</span><span class="cn">TRUE</span>, <span class="at">background=</span><span class="st">"lightpink"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">row_spec</span>(<span class="dv">0</span>, <span class="at">bold=</span><span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  kableExtra<span class="sc">::</span><span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"hover"</span>, <span class="st">"condensed"</span>,<span class="st">"responsive"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+
+<table class="table table-hover table-condensed table-responsive" style="margin-left: auto; margin-right: auto;">
+<caption>
+Top 15 Games (by # of People Owned) since the 1990s
+</caption>
+<thead>
+<tr>
+<th style="text-align:left;font-weight: bold;">
+Game
+</th>
+<th style="text-align:right;font-weight: bold;">
+Owned
+</th>
+<th style="text-align:right;font-weight: bold;">
+Year
+</th>
+<th style="text-align:left;font-weight: bold;">
+Category
+</th>
+<th style="text-align:left;font-weight: bold;">
+Rating
+</th>
+<th style="text-align:left;font-weight: bold;">
+Designer
+</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left;">
+Pandemic
+</td>
+<td style="text-align:right;">
+168364
+</td>
+<td style="text-align:right;">
+2008
+</td>
+<td style="text-align:left;">
+Medical
+</td>
+<td style="text-align:left;">
+7.59
+</td>
+<td style="text-align:left;">
+Matt Leacock
+</td>
+</tr>
+<tr>
+<td style="text-align:left;font-weight: bold;background-color: lightpink !important;">
+Catan
+</td>
+<td style="text-align:right;font-weight: bold;background-color: lightpink !important;">
+167733
+</td>
+<td style="text-align:right;font-weight: bold;background-color: lightpink !important;">
+1995
+</td>
+<td style="text-align:left;font-weight: bold;background-color: lightpink !important;">
+Economic; Negotiation
+</td>
+<td style="text-align:left;font-weight: bold;background-color: lightpink !important;">
+7.14
+</td>
+<td style="text-align:left;font-weight: bold;background-color: lightpink !important;">
+Klaus Teuber
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Carcassonne
+</td>
+<td style="text-align:right;">
+161299
+</td>
+<td style="text-align:right;">
+2000
+</td>
+<td style="text-align:left;">
+City Building; Medieval; Territory Building
+</td>
+<td style="text-align:left;">
+7.42
+</td>
+<td style="text-align:left;">
+Klaus-Jürgen Wrede
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7 Wonders
+</td>
+<td style="text-align:right;">
+120466
+</td>
+<td style="text-align:right;">
+2010
+</td>
+<td style="text-align:left;">
+Ancient; Card Game; City Building; Civilization; Economic
+</td>
+<td style="text-align:left;">
+7.74
+</td>
+<td style="text-align:left;">
+Antoine Bauza
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Codenames
+</td>
+<td style="text-align:right;">
+119753
+</td>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:left;">
+Card Game; Deduction; Party Game; Spies/Secret Agents; Word Game
+</td>
+<td style="text-align:left;">
+7.6
+</td>
+<td style="text-align:left;">
+Vlaada Chvátil
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+7 Wonders Duel
+</td>
+<td style="text-align:right;">
+111275
+</td>
+<td style="text-align:right;">
+2015
+</td>
+<td style="text-align:left;">
+Ancient; Card Game; City Building; Civilization; Economic
+</td>
+<td style="text-align:left;">
+8.11
+</td>
+<td style="text-align:left;">
+Antoine Bauza; Bruno Cathala
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Dominion
+</td>
+<td style="text-align:right;">
+106956
+</td>
+<td style="text-align:right;">
+2008
+</td>
+<td style="text-align:left;">
+Card Game; Medieval
+</td>
+<td style="text-align:left;">
+7.61
+</td>
+<td style="text-align:left;">
+Donald X. Vaccarino
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ticket to Ride
+</td>
+<td style="text-align:right;">
+105748
+</td>
+<td style="text-align:right;">
+2004
+</td>
+<td style="text-align:left;">
+Trains
+</td>
+<td style="text-align:left;">
+7.41
+</td>
+<td style="text-align:left;">
+Alan R. Moon
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Terraforming Mars
+</td>
+<td style="text-align:right;">
+101872
+</td>
+<td style="text-align:right;">
+2016
+</td>
+<td style="text-align:left;">
+Economic; Environmental; Industry / Manufacturing; Science Fiction; Space Exploration; Territory Building
+</td>
+<td style="text-align:left;">
+8.42
+</td>
+<td style="text-align:left;">
+Jacob Fryxelius
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Love Letter
+</td>
+<td style="text-align:right;">
+98395
+</td>
+<td style="text-align:right;">
+2012
+</td>
+<td style="text-align:left;">
+Card Game; Deduction; Renaissance
+</td>
+<td style="text-align:left;">
+7.23
+</td>
+<td style="text-align:left;">
+Seiji Kanai
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Azul
+</td>
+<td style="text-align:right;">
+95533
+</td>
+<td style="text-align:right;">
+2017
+</td>
+<td style="text-align:left;">
+Abstract Strategy; Puzzle; Renaissance
+</td>
+<td style="text-align:left;">
+7.8
+</td>
+<td style="text-align:left;">
+Michael Kiesling
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Splendor
+</td>
+<td style="text-align:right;">
+92366
+</td>
+<td style="text-align:right;">
+2014
+</td>
+<td style="text-align:left;">
+Card Game; Economic; Renaissance
+</td>
+<td style="text-align:left;">
+7.44
+</td>
+<td style="text-align:left;">
+Marc André
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Ticket to Ride: Europe
+</td>
+<td style="text-align:right;">
+92203
+</td>
+<td style="text-align:right;">
+2005
+</td>
+<td style="text-align:left;">
+Trains
+</td>
+<td style="text-align:left;">
+7.54
+</td>
+<td style="text-align:left;">
+Alan R. Moon
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+King of Tokyo
+</td>
+<td style="text-align:right;">
+88090
+</td>
+<td style="text-align:right;">
+2011
+</td>
+<td style="text-align:left;">
+Dice; Fighting; Movies / TV / Radio theme; Science Fiction
+</td>
+<td style="text-align:left;">
+7.17
+</td>
+<td style="text-align:left;">
+Richard Garfield
+</td>
+</tr>
+<tr>
+<td style="text-align:left;">
+Small World
+</td>
+<td style="text-align:right;">
+86452
+</td>
+<td style="text-align:right;">
+2009
+</td>
+<td style="text-align:left;">
+Fantasy; Fighting; Territory Building
+</td>
+<td style="text-align:left;">
+7.25
+</td>
+<td style="text-align:left;">
+Philippe Keyaerts
+</td>
+</tr>
+</tbody>
+
+</table>
+<p>Table 1. Top 15 most owned games (1990-2023).</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>These designers, while might not be as prolific, are also considered one of the best, as they created some of the most successful board games.</p>
+</div>
+</div>
+<p><strong>Association between owned status and game rating?</strong></p>
+<p>We see that these top-selling games are also highly rated, so I wonder, is there any correlation between # of people owning the games and their rating?</p>
+<div class="cell">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>owned_games <span class="sc">%&gt;%</span> <span class="fu">filter</span>(owned<span class="sc">&gt;=</span><span class="dv">100</span>), <span class="fu">aes</span>(<span class="at">x=</span>owned, <span class="at">y=</span>average)) <span class="sc">+</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hex</span>(<span class="at">bins=</span><span class="dv">45</span>) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_c</span>(<span class="at">option=</span><span class="st">"D"</span>) <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">stat=</span><span class="st">"smooth"</span>, <span class="at">color=</span><span class="st">"red"</span>) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_log10</span>() <span class="sc">+</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Number of People Owning the Game"</span>,</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Rating of the Game"</span>,</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Game Rating vs. Number of People Owning the Game"</span>,</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle =</span> <span class="st">"A potential positive association is found, though many games cluster around </span><span class="sc">\n</span><span class="st">rating = 6-7 and # owned = between 100~1000."</span>,</span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption =</span> <span class="st">"Only games owned by at least 100 people are included in the analysis."</span>) <span class="sc">+</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">21</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">16</span>),</span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.x =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">18</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">18</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="analysis_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid figure-img" width="864"></p>
+<figcaption class="figure-caption">Fig 7. Association of rating vs.&nbsp;owned status.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We see a slight positive trend, though more investigation is needed to elucidate the exact relationship.</p>
+<p><strong>What game categories are popular in each year?</strong></p>
+<p>Next, I assess popular game categories in each year.</p>
+<div class="cell">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>games_category <span class="ot">&lt;-</span> games <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(category, <span class="at">sep =</span> <span class="st">";</span><span class="sc">\\</span><span class="st">s*"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(yearpublished, category) <span class="sc">%&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">count=</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(yearpublished, <span class="fu">desc</span>(count)) <span class="sc">%&gt;%</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">category=</span><span class="fu">gsub</span>(<span class="st">"^'(.+)'$|^</span><span class="sc">\"</span><span class="st">(.+)</span><span class="sc">\"</span><span class="st">$"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1</span><span class="sc">\\</span><span class="st">2"</span>, category))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Here, we see that card games are extremely popular ever since the 90s. Dice and fantasy games are also growing in popularity in recent years.</p>
+<div class="cell">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"#2F4F4F"</span>,<span class="st">"#CE5FA7"</span>,<span class="st">"#DBD4D4"</span>,<span class="st">"#DE1818"</span>,<span class="st">"#023DCF"</span>, </span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>            <span class="st">"#D580FF"</span>, <span class="st">"#FFD900"</span>,<span class="st">"#6B00C2"</span>,<span class="st">"#00407F"</span>,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">"#66E0FF"</span>,<span class="st">"#B03B56"</span>,<span class="st">"#90EE90"</span>,<span class="st">"#A4918C"</span>,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">"#3BA500"</span>,<span class="st">"#000000"</span>)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(games_category , <span class="fu">aes</span>(<span class="at">x=</span>yearpublished, <span class="at">y=</span>count, <span class="at">fill=</span>category)) <span class="sc">+</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Top 3 Game Categories by Year"</span>, </span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Years"</span>,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Frequency"</span>,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">"Card game is by far the most popular game category over the years."</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption=</span><span class="st">"Some games are associated with multiple categories."</span>) <span class="sc">+</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span>pal) <span class="sc">+</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">14</span>),</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">19</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">9</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">14</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>   <span class="fu">guides</span>(<span class="at">fill=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"Category"</span>,<span class="at">keyheight=</span><span class="dv">1</span>, <span class="at">keywidth=</span><span class="dv">1</span>,<span class="at">ncol=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="analysis_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption class="figure-caption">Fig 8. Trends of top 3 game categories over time (1990-2023).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We can also see some interesting trends here that the 90s popular game categories are more associated with wars, potentially a result of the cold war that ended in 1991.</p>
+<p><strong>What game mechanics are popular in each year?</strong></p>
+<p>Similarly, we look at popular game mechanics. That is, the mode of the board game or how it is played.</p>
+<div class="cell">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>games_mechanic <span class="ot">&lt;-</span> games <span class="sc">%&gt;%</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">separate_rows</span>(mechanic, <span class="at">sep =</span> <span class="st">";</span><span class="sc">\\</span><span class="st">s*"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(mechanic)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">group_by</span>(yearpublished, mechanic) <span class="sc">%&gt;%</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">summarise</span>(<span class="at">count=</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">arrange</span>(yearpublished, <span class="fu">desc</span>(count)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">slice_head</span>(<span class="at">n=</span><span class="dv">3</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">mutate</span>(<span class="at">mechanic=</span><span class="fu">gsub</span>(<span class="st">"^'(.+)'$|^</span><span class="sc">\"</span><span class="st">(.+)</span><span class="sc">\"</span><span class="st">$"</span>, <span class="st">"</span><span class="sc">\\</span><span class="st">1</span><span class="sc">\\</span><span class="st">2"</span>, mechanic))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Show Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>pal <span class="ot">=</span> <span class="fu">c</span>(<span class="st">"#2F4F4F"</span>,<span class="st">"#CE5FA7"</span>,<span class="st">"#023DCF"</span>,<span class="st">"#A4918C"</span>,<span class="st">"#ADD8E6"</span>, </span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>            <span class="st">"#FFA07A"</span>, <span class="st">"#FFD700"</span>,<span class="st">"#6B00C2"</span>,<span class="st">"#DDA0DD"</span>,</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>            <span class="st">"#66E0FF"</span>,<span class="st">"#B03B56"</span>,<span class="st">"#DE1818"</span>,<span class="st">"#3BA500"</span>,</span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>            <span class="st">"#EEE8AA"</span>,<span class="st">"#000000"</span>)</span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(games_mechanic , <span class="fu">aes</span>(<span class="at">x=</span>yearpublished, <span class="at">y=</span>count, <span class="at">fill=</span>mechanic)) <span class="sc">+</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>) <span class="sc">+</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title=</span><span class="st">"Top 3 Game Mechanics by Year"</span>, </span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>       <span class="at">x=</span><span class="st">"Years"</span>,</span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>       <span class="at">y=</span><span class="st">"Frequency"</span>,</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">subtitle=</span><span class="st">"Dice rolling, hand management, and variable player power games are popular game mechanics."</span>,</span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>       <span class="at">caption=</span><span class="st">"Some games are associated with multiple mechanics."</span>) <span class="sc">+</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values=</span>pal) <span class="sc">+</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>),</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">14</span>),</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">19</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">12</span>),</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">9</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">14</span>, <span class="at">face=</span><span class="st">"bold"</span>),</span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text =</span> <span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb17-22"><a href="#cb17-22" aria-hidden="true" tabindex="-1"></a>   <span class="fu">guides</span>(<span class="at">fill=</span><span class="fu">guide_legend</span>(<span class="at">title=</span><span class="st">"mechanic"</span>,<span class="at">keyheight=</span><span class="dv">1</span>, <span class="at">keywidth=</span><span class="dv">1</span>,<span class="at">ncol=</span><span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="analysis_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid figure-img" width="960"></p>
+<figcaption class="figure-caption">Fig 9. Trends of top 3 game mechanics over time (1990-2023).</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>We observed that dice rolling, hand management, and variable player power games are very popular.</p>
+</section>
+</section>
+<section id="summary" class="level1">
+<h1>Summary</h1>
+<p>In this example analysis, we explored the board game dataset to identify some of the best board game designers, based on quantity, rating, consistency, trends, owned status. We listed out a few of the best designers, including Reiner Knizia, Dean Essig, Eric M. Lang, Martin Wallace, &amp; Matt Leacock. We also identified the top three most popular game categories and mechanics, such as card game and dice rolling, respectively. Overall, we observed a positive trend of game ratings and quantity and expected the board game market to grow as projected.</p>
+</section>
+<section id="functions-used" class="level1">
+<h1>Functions Used</h1>
+<p><strong>dplyr:</strong> mutate, filter, group_by, summarise, arrange, rename, select, left_join, rename_with, slice_head, ungroup, distinct, anti_join</p>
+<p><strong>tidyr:</strong> separate_rows</p>
+<p><strong>ggplot2:</strong> geom_bar, geom_col, geom_boxplot, geom_point, geom_smooth, geom_hex, facet_wrap</p>
+<div id="bibliography">
+
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body" data-line-spacing="2" role="list">
+<div id="ref-Technavio2023" class="csl-entry" role="listitem">
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Technavio. <a href="https://www.technavio.com/report/board-games-market-industry-analysis"><span>Board Games Market Analysis Forecast 2023-2027</span></a>. (2023).</div>
+</div>
+<div id="ref-datsource" class="csl-entry" role="listitem">
+<div class="csl-left-margin">2. </div><div class="csl-right-inline">Kaggle; Board Games Geek. <a href="https://github.com/rfordatascience/tidytuesday/tree/master/data/2022/2022-01-25"><span>Board Games</span></a>. (2022).</div>
+</div>
+<div id="ref-catan" class="csl-entry" role="listitem">
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">CATAN GMBH. <a href="https://www.catan.com/"><span>Catan</span></a>. (2023).</div>
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const disableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'prefetch';
+    }
+  }
+  const enableStylesheet = (stylesheets) => {
+    for (let i=0; i < stylesheets.length; i++) {
+      const stylesheet = stylesheets[i];
+      stylesheet.rel = 'stylesheet';
+    }
+  }
+  const manageTransitions = (selector, allowTransitions) => {
+    const els = window.document.querySelectorAll(selector);
+    for (let i=0; i < els.length; i++) {
+      const el = els[i];
+      if (allowTransitions) {
+        el.classList.remove('notransition');
+      } else {
+        el.classList.add('notransition');
+      }
+    }
+  }
+  const toggleColorMode = (alternate) => {
+    // Switch the stylesheets
+    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+    manageTransitions('#quarto-margin-sidebar .nav-link', false);
+    if (alternate) {
+      enableStylesheet(alternateStylesheets);
+      for (const sheetNode of alternateStylesheets) {
+        if (sheetNode.id === "quarto-bootstrap") {
+          toggleBodyColorMode(sheetNode);
+        }
+      }
+    } else {
+      disableStylesheet(alternateStylesheets);
+      toggleBodyColorPrimary();
+    }
+    manageTransitions('#quarto-margin-sidebar .nav-link', true);
+    // Switch the toggles
+    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+    for (let i=0; i < toggles.length; i++) {
+      const toggle = toggles[i];
+      if (toggle) {
+        if (alternate) {
+          toggle.classList.add("alternate");     
+        } else {
+          toggle.classList.remove("alternate");
+        }
+      }
+    }
+    // Hack to workaround the fact that safari doesn't
+    // properly recolor the scrollbar when toggling (#1455)
+    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+      manageTransitions("body", false);
+      window.scrollTo(0, 1);
+      setTimeout(() => {
+        window.scrollTo(0, 0);
+        manageTransitions("body", true);
+      }, 40);  
+    }
+  }
+  const isFileUrl = () => { 
+    return window.location.protocol === 'file:';
+  }
+  const hasAlternateSentinel = () => {  
+    let styleSentinel = getColorSchemeSentinel();
+    if (styleSentinel !== null) {
+      return styleSentinel === "alternate";
+    } else {
+      return false;
+    }
+  }
+  const setStyleSentinel = (alternate) => {
+    const value = alternate ? "alternate" : "default";
+    if (!isFileUrl()) {
+      window.localStorage.setItem("quarto-color-scheme", value);
+    } else {
+      localAlternateSentinel = value;
+    }
+  }
+  const getColorSchemeSentinel = () => {
+    if (!isFileUrl()) {
+      const storageValue = window.localStorage.getItem("quarto-color-scheme");
+      return storageValue != null ? storageValue : localAlternateSentinel;
+    } else {
+      return localAlternateSentinel;
+    }
+  }
+  let localAlternateSentinel = 'default';
+  // Dark / light mode switch
+  window.quartoToggleColorScheme = () => {
+    // Read the current dark / light value 
+    let toAlternate = !hasAlternateSentinel();
+    toggleColorMode(toAlternate);
+    setStyleSentinel(toAlternate);
+  };
+  // Ensure there is a toggle, if there isn't float one in the top right
+  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+    const a = window.document.createElement('a');
+    a.classList.add('top-right');
+    a.classList.add('quarto-color-scheme-toggle');
+    a.href = "";
+    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+    const i = window.document.createElement("i");
+    i.classList.add('bi');
+    a.appendChild(i);
+    window.document.body.appendChild(a);
+  }
+  // Switch to dark mode if need be
+  if (hasAlternateSentinel()) {
+    toggleColorMode(true);
+  } else {
+    toggleColorMode(false);
+  }
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

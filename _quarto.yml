@@ -1,0 +1,31 @@
+project:
+  type: website
+  output-dir: docs
+
+website:
+  title: "Personal Website"
+  navbar:
+    right:
+      - href: index.qmd
+        text: Home
+      - about.qmd
+      - analysis.qmd
+
+format:
+  html:
+    theme:
+      light: lumen
+      dark: cyborg
+    css: styles.css
+    toc: true
+    code-fold: true
+    code-summary: "Show Code"
+    page-layout: article
+    
+editor: visual
+
+execute:
+  freeze: auto
+
+
+
